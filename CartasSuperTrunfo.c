@@ -14,10 +14,10 @@ struct carta {
 };
 
 void calculo(struct carta *val) {
-    val->densidadePopulacional = val->populacao / val->area;
+    val->densidadePopulacional = (float)val->populacao / val->area;
     val->pibPerCapita = val->pib / val->populacao;
 
-    val->superPoder = (float)val->populacao + val->area + val->pib + (float)val->numPontosTuristicos + val->pibPerCapita + (val->densidadePopulacional * -1);
+    val->superPoder = (float)val->populacao + val->area + val->pib + (float)val->numPontosTuristicos + val->pibPerCapita + (1.0 / val->densidadePopulacional);
 }
 
 void entrada(struct carta *val) {
@@ -28,7 +28,7 @@ void entrada(struct carta *val) {
     printf("Escolha uma cidade: ");
     scanf("%s", val->cidade);
     printf("Digite a quantidade de populacao: ");
-    scanf("%d", &val->populacao);
+    scanf("%lu", &val->populacao);
     printf("Digite a area em KM (somente o numero): ");
     scanf("%f", &val->area);
     printf("Digite o pib: ");
@@ -42,7 +42,7 @@ void saida(struct carta *val) {
     printf("Estado: %s\n", val->estado);
     printf("Codigo da Carta: %s%s\n", val->estado, val->codigoCarta);
     printf("Cidade: %s\n", val->cidade);
-    printf("Populacao: %d\n", val->populacao);
+    printf("Populacao: %lu\n", val->populacao);
     printf("Area: %.2f KM²\n", val->area);
     printf("PIB: %.2f bilhões de reais\n", val->pib);
     printf("Pontos Turisticos: %d\n", val->numPontosTuristicos);
