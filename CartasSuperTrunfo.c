@@ -4,17 +4,20 @@ struct carta {
     char estado[2];
     char codigoCarta[3];
     char cidade[50];
-    int populacao;
+    unsigned long int populacao;
     float area;
     float pib;
     int numPontosTuristicos;
     float densidadePopulacional;
     float pibPerCapita;
+    float superPoder;
 };
 
 void calculo(struct carta *val) {
-    val->densidadePopulacional = (float) val->populacao / val->area;
+    val->densidadePopulacional = val->populacao / val->area;
     val->pibPerCapita = val->pib / val->populacao;
+
+    val->superPoder = (float)val->populacao + val->area + val->pib + (float)val->numPontosTuristicos + val->pibPerCapita + (val->densidadePopulacional * -1);
 }
 
 void entrada(struct carta *val) {
@@ -35,7 +38,7 @@ void entrada(struct carta *val) {
     calculo(val);
 }
 
-void saida(struct carta *val){
+void saida(struct carta *val) {
     printf("Estado: %s\n", val->estado);
     printf("Codigo da Carta: %s%s\n", val->estado, val->codigoCarta);
     printf("Cidade: %s\n", val->cidade);
@@ -45,6 +48,51 @@ void saida(struct carta *val){
     printf("Pontos Turisticos: %d\n", val->numPontosTuristicos);
     printf("Densidade Populacional: %.2f hab/km²\n", val->densidadePopulacional);
     printf("PIB Per Capita: %.2f reais\n", val->pibPerCapita);
+    printf("Super Poder: %.2f\n", val->superPoder);
+}
+
+void comparacao(struct carta *val1, struct carta *val2) {
+    if (val1->populacao > val2->populacao) {
+        printf("Populacao: Carta 1 venceu (%d)\n", val1->populacao > val2->populacao);
+    } else {
+        printf("Populacao: Carta 2 venceu (%d)\n", val1->populacao > val2->populacao);
+    }
+
+    if (val1->area > val2->area) {
+        printf("Área: Carta 1 venceu (%d)\n", val1->area > val2->area);
+    } else {
+        printf("Área: Carta 2 venceu (%d)\n", val1->area > val2->area);
+    }
+
+    if (val1->pib > val2->pib) {
+        printf("PIB: Carta 1 venceu (%d)\n", val1->pib > val2->pib);
+    } else {
+        printf("PIB: Carta 2 venceu (%d)\n", val1->pib > val2->pib);
+    }
+
+    if (val1->numPontosTuristicos > val2->numPontosTuristicos) {
+        printf("Pontos Turisticos: Carta 1 venceu (%d)\n", val1->numPontosTuristicos > val2->numPontosTuristicos);
+    } else {
+        printf("Pontos Turisticos: Carta 2 venceu (%d)\n", val1->numPontosTuristicos > val2->numPontosTuristicos);
+    }
+
+    if (val1->densidadePopulacional < val2->densidadePopulacional) {
+        printf("Densidade Populacional: Carta 1 venceu (%d)\n", val1->densidadePopulacional < val2->densidadePopulacional);
+    } else {
+        printf("Densidade Populacional: Carta 2 venceu (%d)\n", val1->densidadePopulacional < val2->densidadePopulacional);
+    }
+
+    if (val1->pibPerCapita > val2->pibPerCapita) {
+        printf("PIB Per Capita: Carta 1 venceu (%d)\n", val1->pibPerCapita > val2->pibPerCapita);
+    } else {
+        printf("PIB Per Capita: Carta 2 venceu (%d)\n", val1->pibPerCapita > val2->pibPerCapita);
+    }
+
+    if (val1->superPoder > val2->superPoder) {
+        printf("Super Poder: Carta 1 venceu (%d)\n", val1->superPoder > val2->superPoder);
+    } else {
+        printf("Super Poder: Carta 2 venceu (%d)\n", val1->superPoder > val2->superPoder);
+    }
 }
 
 int main() {
@@ -65,4 +113,7 @@ int main() {
 
     printf("\n\nCarta 2\n");
     saida(&cartaDois);
-};
+
+    printf("\n\nComparação das Cartas\n");
+    comparacao(&cartaUm, &cartaDois);
+}
